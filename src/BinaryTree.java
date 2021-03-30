@@ -156,7 +156,7 @@ public class BinaryTree
 
 
     }
-    private int getNodeHeight(BinaryTreeNode node) {
+    protected int getNodeHeight(BinaryTreeNode node) {
         if (node == null)
         {
             return -1;

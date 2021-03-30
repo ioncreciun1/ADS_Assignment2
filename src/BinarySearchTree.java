@@ -119,7 +119,61 @@ public class BinarySearchTree extends BinaryTree
     }
     public void rebalance()
     {
-        
+        if(getRoot()!=null)
+        {
+            balance(getRoot());
+        }
+
+    }
+
+    private void balance(BinaryTreeNode node)
+    {
+    if(node!=null)
+    {
+        balance(node.getLeftChild());
+        balance(node.getRightChild());
+        int leftBalance = getNodeHeight(node.getLeftChild());
+        int rightBalance = getNodeHeight(node.getRightChild());
+        if(Math.abs(leftBalance-rightBalance)>1)
+        {
+            if(leftBalance>rightBalance)
+                rightRotation(node);
+            else
+                leftRotation(node);
+        }
+    }
+    }
+
+    public void leftRotation(BinaryTreeNode node)
+    {
+        BinaryTreeNode tempNode = null;
+        if(node.getRightChild().getLeftChild()!=null)
+        {
+            tempNode = node.getRightChild().getLeftChild();
+        }
+        if(getRoot().getElement()==node.getElement())
+        {
+            setRoot(node.getRightChild());
+        }
+        node.getRightChild().addLeftChild(node);
+        if(tempNode!=null)
+            node.addRightChild(tempNode);
+
+    }
+    public void rightRotation(BinaryTreeNode node)
+    {
+        BinaryTreeNode tempNode = null;
+        if(node.getLeftChild().getRightChild()!=null)
+        {
+            tempNode = node.getLeftChild().getRightChild();
+        }
+        if(getRoot().getElement()==node.getElement())
+        {
+            setRoot(node.getLeftChild());
+        }
+        node.getLeftChild().addRightChild(node);
+        if(tempNode!=null)
+            node.addLeftChild(tempNode);
     }
     
 }
