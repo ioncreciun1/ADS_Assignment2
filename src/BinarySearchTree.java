@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class BinarySearchTree extends BinaryTree
 {
     public void insert(BinaryTreeNode element)
@@ -30,6 +32,7 @@ public class BinarySearchTree extends BinaryTree
                 parent.addRightChild(element);
         }
         increaseSize();
+       // rebalance();
 
 
     }
@@ -82,6 +85,10 @@ public class BinarySearchTree extends BinaryTree
                 node = null;
             }
         }
+        if(getRoot().getElement()==element.getElement())
+        {
+            setRoot(null);
+        }
     }
 
     private BinaryTreeNode findMinByNode(BinaryTreeNode node)
@@ -119,61 +126,19 @@ public class BinarySearchTree extends BinaryTree
     }
     public void rebalance()
     {
-        if(getRoot()!=null)
-        {
-            balance(getRoot());
-        }
-
+        ArrayList<BinaryTreeNode> order = inOrder();
+        setRoot(balanceTree(order,0,order.size()-1));
     }
-
-    private void balance(BinaryTreeNode node)
+    private BinaryTreeNode balanceTree(ArrayList<BinaryTreeNode> nodes, int start, int end)
     {
-    if(node!=null)
-    {
-        balance(node.getLeftChild());
-        balance(node.getRightChild());
-        int leftBalance = getNodeHeight(node.getLeftChild());
-        int rightBalance = getNodeHeight(node.getRightChild());
-        if(Math.abs(leftBalance-rightBalance)>1)
-        {
-            if(leftBalance>rightBalance)
-                rightRotation(node);
-            else
-                leftRotation(node);
-        }
-    }
-    }
+        if (start > end)
+            return null;
 
-    public void leftRotation(BinaryTreeNode node)
-    {
-        BinaryTreeNode tempNode = null;
-        if(node.getRightChild().getLeftChild()!=null)
-        {
-            tempNode = node.getRightChild().getLeftChild();
-        }
-        if(getRoot().getElement()==node.getElement())
-        {
-            setRoot(node.getRightChild());
-        }
-        node.getRightChild().addLeftChild(node);
-        if(tempNode!=null)
-            node.addRightChild(tempNode);
+        int mid = (start + end) / 2;
+        BinaryTreeNode node = nodes.get(mid);
 
+        node.addLeftChild(balanceTree(nodes,start,mid-1));
+        node.addRightChild(balanceTree(nodes,mid+1,end));
+        return node;
     }
-    public void rightRotation(BinaryTreeNode node)
-    {
-        BinaryTreeNode tempNode = null;
-        if(node.getLeftChild().getRightChild()!=null)
-        {
-            tempNode = node.getLeftChild().getRightChild();
-        }
-        if(getRoot().getElement()==node.getElement())
-        {
-            setRoot(node.getLeftChild());
-        }
-        node.getLeftChild().addRightChild(node);
-        if(tempNode!=null)
-            node.addLeftChild(tempNode);
-    }
-    
 }

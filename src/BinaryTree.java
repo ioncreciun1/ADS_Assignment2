@@ -24,7 +24,7 @@ public class BinaryTree
         return root;
     }
 
-    public void setRoot(BinaryTreeNode root)
+    protected void setRoot(BinaryTreeNode root)
     {
         this.root = root;
     }
@@ -37,10 +37,10 @@ public class BinaryTree
     public boolean contains(int element)
     {
         BinaryTreeNode node = root;
-        boolean c = false;
-        while(!c) {
-            if (node.getElement() == element) {
-                c=true;
+        while(node!=null) {
+
+            if (node.getElement() == element ) {
+                return true;
             } else if (element > node.getElement())
             {
                 node = node.getRightChild();
@@ -49,8 +49,9 @@ public class BinaryTree
             {
                 node= node.getLeftChild();
             }
+
         }
-        return c;
+        return false;
     }
 
     private void inOrderTraversal(BinaryTreeNode node, ArrayList<BinaryTreeNode> list)
@@ -100,14 +101,12 @@ public class BinaryTree
     public ArrayList<BinaryTreeNode> preOrder()
     {
         ArrayList<BinaryTreeNode> preOrder = new ArrayList<>();
-
         if(root==null)
         {
             return null;
         }
 
         PreOrderTraversal(root,preOrder);
-
         return preOrder;
     }
     public ArrayList<BinaryTreeNode> postOrder()

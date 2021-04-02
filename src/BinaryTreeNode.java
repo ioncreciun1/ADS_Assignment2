@@ -4,7 +4,14 @@ public class BinaryTreeNode {
     private BinaryTreeNode rightChild;
     public BinaryTreeNode()
     {
-
+    leftChild = null;
+    rightChild = null;
+    }
+    public BinaryTreeNode(int element)
+    {
+        this.element = element;
+        leftChild = null;
+        rightChild = null;
     }
 
     public int getElement() {
