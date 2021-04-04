@@ -32,9 +32,6 @@ public class BinarySearchTree extends BinaryTree
                 parent.addRightChild(element);
         }
         increaseSize();
-       // rebalance();
-
-
     }
     public void removeElement(BinaryTreeNode element)
     {
